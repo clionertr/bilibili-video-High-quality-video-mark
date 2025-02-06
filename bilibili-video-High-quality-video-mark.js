@@ -24,8 +24,10 @@
         LOADING_ICON: '⏳',
         RETRY_LIMIT: 3,
         DEBOUNCE_TIME: 200,
-        INIT_DELAY: 2000, // 初始化延迟
-        CHECK_INTERVAL: 3000 // 检查间隔
+        INIT_DELAY: 800, // 初始化延迟
+        CHECK_INTERVAL: 3000, // 检查间隔
+        SHOW_PERCENT: false // 是否开启显示计算百分比
+
     };
 
     GM_addStyle(`
@@ -177,7 +179,11 @@
         createBadge(stats) {
             const badge = document.createElement('span');
             badge.className = 'bili-quality-tag';
-            badge.innerHTML = `<span>${(stats.like/stats.view*100).toFixed(1)}%</span>${CONFIG.TAG_TEXT}`;
+            if (CONFIG.SHOW_PERCENT){
+                badge.innerHTML = `<span>${(stats.like/stats.view*100).toFixed(1)}%</span>${CONFIG.TAG_TEXT}`;
+            }else {
+                badge.innerHTML = `${CONFIG.TAG_TEXT}`;
+            }
             return badge;
         }
 
